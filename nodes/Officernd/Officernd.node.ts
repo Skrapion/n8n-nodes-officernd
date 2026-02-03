@@ -1,6 +1,8 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { memberOperations, memberFields } from './MemberDescription';
 import { membershipOperations, membershipFields } from './MembershipDescription';
+import { dayPassOperations, dayPassFields } from './DayPassDescription';
+import { planOperations, planFields } from './PlanDescription';
 
 export class Officernd implements INodeType {
 	description: INodeTypeDescription = {
@@ -40,6 +42,14 @@ export class Officernd implements INodeType {
 						name: 'Membership',
 						value: 'membership',
 					},
+					{
+						name: 'Plan',
+						value: 'plan',
+					},
+					{
+						name: 'Day Pass',
+						value: 'dayPass',
+					},
 				],
 				default: 'member',
 			},
@@ -47,6 +57,10 @@ export class Officernd implements INodeType {
       ...memberFields,
 			...membershipOperations,
       ...membershipFields,
+      ...dayPassOperations,
+      ...dayPassFields,
+      ...planOperations,
+      ...planFields,
 		],
 	};
 }

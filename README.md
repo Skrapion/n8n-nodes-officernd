@@ -31,9 +31,6 @@ The node supports the following operations:
 * Plans
   * Get Plan
   * Get All Plans
-* Fees
-  * Get Fee
-  * Get All Fees
 * Passes
   * Get All Sets of Daypasses
   * Get a Set of Daypasses
@@ -109,7 +106,6 @@ To use all the features of this node, you'll need the following permissions:
 * flex.community.members.read
 * flex.community.members.update
 * flex.community.checkins.create
-* flex.community.fees.read
 * flex.community.memberships.read
 * flex.space.locations.read
 * flex.space.passes.read

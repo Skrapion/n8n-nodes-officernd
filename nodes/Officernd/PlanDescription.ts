@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const membershipOperations: INodeProperties[] = [
+export const planOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -8,15 +8,15 @@ export const membershipOperations: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
-        resource: ['membership'],
+        resource: ['plan'],
       },
 		},
 		options: [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get a membership',
-				description: 'Get the data of a single membership',
+				action: 'Get a plan',
+				description: 'Get a single plan',
 				routing: {
 					request: {
 						method: 'GET',
@@ -26,12 +26,12 @@ export const membershipOperations: INodeProperties[] = [
       {
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get memberships',
-				description: 'Get the data of many memberships',
+				action: 'Get plans',
+				description: 'Get many plans',
 				routing: {
 					request: {
 						method: 'GET',
-			      url: '/memberships',
+			      url: '/plans',
 					},
           send: {
             paginate: true,
@@ -64,65 +64,25 @@ export const membershipOperations: INodeProperties[] = [
 	},
 ];
 
-export const membershipFields: INodeProperties[] = [
+export const planFields: INodeProperties[] = [
 	{
-		displayName: 'Membership ID',
-		name: 'membershipId',
+		displayName: 'Plan ID',
+		name: 'planId',
 		type: 'string',
     required: true,
 		displayOptions: { 
       show: {
         operation: ['get'],
-        resource: ['membership'],
+        resource: ['plan'],
       } 
     },
     routing: {
       request: {
-        url: '=/members/{{ $value }}'
+        url: '=/plans/{{ $value }}'
       },
     },
 		default: '',
-		description: "The ID of the membership to fetch"
-  },
-	{
-		displayName: 'Company ID',
-		name: 'companyId',
-		type: 'string',
-		displayOptions: { 
-      show: {
-        operation: ['getAll'],
-        resource: ['membership'],
-      } 
-    },
-    routing: {
-      send: {
-        type: 'query',
-        property: 'company',
-        value: '={{ $value ? $value : undefined }}',
-      },
-    },
-		default: '',
-		description: 'Filter by the company ID of the membership',
-  },
-	{
-		displayName: 'Member ID',
-		name: 'memberId',
-		type: 'string',
-		displayOptions: { 
-      show: {
-        operation: ['getAll'],
-        resource: ['membership'],
-      } 
-    },
-    routing: {
-      send: {
-        type: 'query',
-        property: 'member',
-        value: '={{ $value ? $value : undefined }}',
-      },
-    },
-		default: '',
-		description: 'Filter by the member ID of the membership',
+		description: "The ID of the plan to fetch"
   },
   {
     displayName: 'Additional Options',
@@ -133,7 +93,7 @@ export const membershipFields: INodeProperties[] = [
 		displayOptions: { 
       show: {
         operation: ['getAll'],
-        resource: ['membership'],
+        resource: ['plan'],
       } 
     },
     options: [

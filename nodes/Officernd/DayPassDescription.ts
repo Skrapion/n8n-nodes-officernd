@@ -1,6 +1,6 @@
 import type { INodeProperties } from 'n8n-workflow';
 
-export const membershipOperations: INodeProperties[] = [
+export const dayPassOperations: INodeProperties[] = [
 	{
 		displayName: 'Operation',
 		name: 'operation',
@@ -8,15 +8,15 @@ export const membershipOperations: INodeProperties[] = [
 		noDataExpression: true,
 		displayOptions: {
 			show: {
-        resource: ['membership'],
+        resource: ['dayPass'],
       },
 		},
 		options: [
 			{
 				name: 'Get',
 				value: 'get',
-				action: 'Get a membership',
-				description: 'Get the data of a single membership',
+				action: 'Get a set of day passes',
+				description: 'Get a single set of day passes',
 				routing: {
 					request: {
 						method: 'GET',
@@ -26,12 +26,12 @@ export const membershipOperations: INodeProperties[] = [
       {
 				name: 'Get Many',
 				value: 'getAll',
-				action: 'Get memberships',
-				description: 'Get the data of many memberships',
+				action: 'Get sets of day passes',
+				description: 'Get many sets of day passes',
 				routing: {
 					request: {
 						method: 'GET',
-			      url: '/memberships',
+			      url: '/passes',
 					},
           send: {
             paginate: true,
@@ -64,25 +64,25 @@ export const membershipOperations: INodeProperties[] = [
 	},
 ];
 
-export const membershipFields: INodeProperties[] = [
+export const dayPassFields: INodeProperties[] = [
 	{
-		displayName: 'Membership ID',
-		name: 'membershipId',
+		displayName: 'Passes ID',
+		name: 'passesId',
 		type: 'string',
     required: true,
 		displayOptions: { 
       show: {
         operation: ['get'],
-        resource: ['membership'],
+        resource: ['dayPass'],
       } 
     },
     routing: {
       request: {
-        url: '=/members/{{ $value }}'
+        url: '=/passes/{{ $value }}'
       },
     },
 		default: '',
-		description: "The ID of the membership to fetch"
+		description: "The ID of the set of passes to fetch"
   },
 	{
 		displayName: 'Company ID',
@@ -91,7 +91,7 @@ export const membershipFields: INodeProperties[] = [
 		displayOptions: { 
       show: {
         operation: ['getAll'],
-        resource: ['membership'],
+        resource: ['dayPass'],
       } 
     },
     routing: {
@@ -102,7 +102,7 @@ export const membershipFields: INodeProperties[] = [
       },
     },
 		default: '',
-		description: 'Filter by the company ID of the membership',
+		description: 'Filter by the company ID of the passes',
   },
 	{
 		displayName: 'Member ID',
@@ -111,7 +111,7 @@ export const membershipFields: INodeProperties[] = [
 		displayOptions: { 
       show: {
         operation: ['getAll'],
-        resource: ['membership'],
+        resource: ['dayPass'],
       } 
     },
     routing: {
@@ -122,7 +122,7 @@ export const membershipFields: INodeProperties[] = [
       },
     },
 		default: '',
-		description: 'Filter by the member ID of the membership',
+		description: 'Filter by the member ID of the passes',
   },
   {
     displayName: 'Additional Options',
@@ -133,7 +133,7 @@ export const membershipFields: INodeProperties[] = [
 		displayOptions: { 
       show: {
         operation: ['getAll'],
-        resource: ['membership'],
+        resource: ['dayPass'],
       } 
     },
     options: [

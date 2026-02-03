@@ -1,5 +1,6 @@
 import { NodeConnectionTypes, type INodeType, type INodeTypeDescription } from 'n8n-workflow';
 import { memberOperations, memberFields } from './MemberDescription';
+import { membershipOperations, membershipFields } from './MembershipDescription';
 
 export class Officernd implements INodeType {
 	description: INodeTypeDescription = {
@@ -35,11 +36,17 @@ export class Officernd implements INodeType {
 						name: 'Member',
 						value: 'member',
 					},
+					{
+						name: 'Membership',
+						value: 'membership',
+					},
 				],
 				default: 'member',
 			},
 			...memberOperations,
       ...memberFields,
+			...membershipOperations,
+      ...membershipFields,
 		],
 	};
 }

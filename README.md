@@ -108,7 +108,6 @@ To use all the features of this node, you'll need the following permissions:
 * flex.billing.plans.read
 * flex.community.members.read
 * flex.community.members.update
-* flex.community.companies.read
 * flex.community.checkins.create
 * flex.community.fees.read
 * flex.community.memberships.read

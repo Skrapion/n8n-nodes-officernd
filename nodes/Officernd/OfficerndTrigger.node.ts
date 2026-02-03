@@ -7,6 +7,7 @@ import type {
 	IWebhookResponseData,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
+import { LoggerProxy } from 'n8n-workflow';
 
 import { eventOptions } from './EventOptions';
 import { officerndApiRequest } from './OfficerndTriggerHelpers';
@@ -52,22 +53,27 @@ export class OfficerndTrigger implements INodeType {
 	webhookMethods = {
 		default: {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
+        LoggerProxy.info("checkExists");
 				const webhookData = this.getWorkflowStaticData('node');
 
 				if (webhookData.webhookId === undefined) {
 					// No webhook id is set so no webhook can exist
+          LoggerProxy.info("No webhook ID");
 					return false;
 				}
 
         try {
 				  await officerndApiRequest.call(this, 'GET', `/webhooks/${webhookData.webhookId}`, {});
         } catch {
+          LoggerProxy.info("Webhook does not exist");
           return false;
         }
 
+        LoggerProxy.info("Webhook exists");
         return true;
 			},
 			async create(this: IHookFunctions): Promise<boolean> {
+        LoggerProxy.info("create");
 				const webhookUrl = this.getNodeWebhookUrl('default') as string;
 
 				if (webhookUrl.includes('//localhost')) {
@@ -96,6 +102,7 @@ export class OfficerndTrigger implements INodeType {
 				return true;
 			},
 			async delete(this: IHookFunctions): Promise<boolean> {
+        LoggerProxy.info("delete");
 				const webhookData = this.getWorkflowStaticData('node');
 
 				if (webhookData.webhookId !== undefined) {
@@ -115,6 +122,7 @@ export class OfficerndTrigger implements INodeType {
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
     //verifySignature.call(this);
+    LoggerProxy.info("webhook request: " + JSON.stringify(this.getRequestObject()))
 
 		const bodyData = this.getBodyData();
 

@@ -254,11 +254,12 @@ export const memberFields: INodeProperties[] = [
             name: 'createdAtGt',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'createdAt[$gt]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -267,11 +268,12 @@ export const memberFields: INodeProperties[] = [
             name: 'createdAtGte',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'createdAt[$gte]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -280,11 +282,12 @@ export const memberFields: INodeProperties[] = [
             name: 'createdAtLt',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'createdAt[$lt]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -293,11 +296,12 @@ export const memberFields: INodeProperties[] = [
             name: 'createdAtLte',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'createdAt[$lte]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -306,11 +310,12 @@ export const memberFields: INodeProperties[] = [
             name: 'modifiedAtGt',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'modifiedAt[$gt]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -319,11 +324,12 @@ export const memberFields: INodeProperties[] = [
             name: 'modifiedAtGte',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'modifiedAt[$gte]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -332,11 +338,12 @@ export const memberFields: INodeProperties[] = [
             name: 'modifiedAtLt',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'modifiedAt[$lt]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },
@@ -345,11 +352,12 @@ export const memberFields: INodeProperties[] = [
             name: 'modifiedAtLte',
             type: 'dateTime',
             default: '',
+            description: 'If no timezone is specified, the workflow timezone will be used',
             routing: {
               send: {
                 type: 'query',
                 property: 'modifiedAt[$lte]',
-                value: '={{ $value ? $value : undefined }}',
+                value: '={{ DateTime.fromISO($value).setZone($workflow.timezone, { keepLocalTime: true }).toISO() }}',
               },
             },
           },

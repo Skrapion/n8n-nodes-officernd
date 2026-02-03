@@ -122,7 +122,7 @@ export class OfficerndTrigger implements INodeType {
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
     //verifySignature.call(this);
-    LoggerProxy.info("webhook request: " + JSON.stringify(this.getRequestObject()))
+    LoggerProxy.info("webhook request: " + this.getRequestObject().getAllHeaders())
 
 		const bodyData = this.getBodyData();
 

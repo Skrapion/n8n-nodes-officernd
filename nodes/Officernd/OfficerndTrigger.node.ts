@@ -7,10 +7,10 @@ import type {
 	IWebhookResponseData,
 } from 'n8n-workflow';
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
-import { LoggerProxy } from 'n8n-workflow';
+//import { LoggerProxy } from 'n8n-workflow';
 
 import { eventOptions } from './EventOptions';
-import { officerndApiRequest } from './OfficerndTriggerHelpers';
+import { officerndApiRequest, verifySignature } from './OfficerndTriggerHelpers';
 
 export class OfficerndTrigger implements INodeType {
 	description: INodeTypeDescription = {
@@ -19,8 +19,7 @@ export class OfficerndTrigger implements INodeType {
 		icon: { light: 'file:officernd.svg', dark: 'file:officernd.dark.svg' },
 		group: ['trigger'],
 		version: 1,
-		subtitle:
-			'={{$parameter["events"].join(", ")}}',
+		subtitle: '={{$parameter["events"].join(", ")}}',
 		description: 'Starts the workflow when OfficeRnD events occur',
 		defaults: {
 			name: 'OfficeRnD Trigger',
@@ -53,27 +52,27 @@ export class OfficerndTrigger implements INodeType {
 	webhookMethods = {
 		default: {
 			async checkExists(this: IHookFunctions): Promise<boolean> {
-        LoggerProxy.info("checkExists");
+        //LoggerProxy.info("checkExists");
 				const webhookData = this.getWorkflowStaticData('node');
 
 				if (webhookData.webhookId === undefined) {
 					// No webhook id is set so no webhook can exist
-          LoggerProxy.info("No webhook ID");
+          //LoggerProxy.info("No webhook ID");
 					return false;
 				}
 
         try {
 				  await officerndApiRequest.call(this, 'GET', `/webhooks/${webhookData.webhookId}`, {});
         } catch {
-          LoggerProxy.info("Webhook does not exist");
+          //LoggerProxy.info("Webhook does not exist");
           return false;
         }
 
-        LoggerProxy.info("Webhook exists");
+        //LoggerProxy.info("Webhook exists");
         return true;
 			},
 			async create(this: IHookFunctions): Promise<boolean> {
-        LoggerProxy.info("create");
+        //LoggerProxy.info("create");
 				const webhookUrl = this.getNodeWebhookUrl('default') as string;
 
 				if (webhookUrl.includes('//localhost')) {
@@ -102,7 +101,7 @@ export class OfficerndTrigger implements INodeType {
 				return true;
 			},
 			async delete(this: IHookFunctions): Promise<boolean> {
-        LoggerProxy.info("delete");
+        //LoggerProxy.info("delete");
 				const webhookData = this.getWorkflowStaticData('node');
 
 				if (webhookData.webhookId !== undefined) {
@@ -121,11 +120,7 @@ export class OfficerndTrigger implements INodeType {
 	};
 
 	async webhook(this: IWebhookFunctions): Promise<IWebhookResponseData> {
-    //verifySignature.call(this);
-    LoggerProxy.info("webhook request: " + this.getRequestObject().headers)
-    for (const [key, value] of Object.entries(this.getRequestObject().headers)) {
-      LoggerProxy.info(`header: ${key}: ${value}`);
-    }
+    verifySignature.call(this);
 
 		const bodyData = this.getBodyData();
 

@@ -8,7 +8,8 @@ import type {
 	IWebhookFunctions,
 	JsonObject,
 } from 'n8n-workflow';
-import { LoggerProxy, NodeApiError } from 'n8n-workflow';
+import { NodeApiError } from 'n8n-workflow';
+// import { LoggerProxy } from 'n8n-workflow';
 
 import { createHmac, timingSafeEqual } from 'crypto';
 
@@ -45,18 +46,20 @@ export async function officerndApiRequest(
     const baseUrl = `https://app.officernd.com/api/v2/organizations/${credentials.orgSlug}`;
     options.url = `${baseUrl}${endpoint}`;
 
+    /*
     LoggerProxy.info(`Url: ${options.url}`);
     LoggerProxy.info('Body: ' + JSON.stringify(options.body));
     LoggerProxy.info("Method: " + options.method);
     LoggerProxy.info("qs: " + JSON.stringify(options.qs));
+    */
 
 		const result = await this.helpers.httpRequestWithAuthentication.call(this, credentialType, options);
     
-    LoggerProxy.info("Result: " + JSON.stringify(result));
+    //LoggerProxy.info("Result: " + JSON.stringify(result));
 
     return result;
 	} catch (error) {
-    LoggerProxy.info("Error: " + JSON.stringify(error));
+    //LoggerProxy.info("Error: " + JSON.stringify(error));
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }
@@ -64,8 +67,8 @@ export async function officerndApiRequest(
 /**
  * Verifies the OfficeRnD webhook signature using HMAC-SHA256.
  *
- * GitHub sends a signature in the `X-Hub-Signature-256` header in the format:
- * `sha256=<HMAC hex digest>`
+ * OfficeRnD sends a signature in the `officernd-signature` header in the format:
+ * `t=<timestamp>,v1=<HMAC hex digest>`
  *
  * This function computes the expected signature using the stored webhook secret
  * and compares it with the provided signature using a constant-time comparison.
@@ -77,26 +80,37 @@ export function verifySignature(this: IWebhookFunctions): boolean {
 	const webhookData = this.getWorkflowStaticData('node');
 	const webhookSecret = webhookData.webhookSecret as string | undefined;
 
-	// If no secret is configured, skip verification (backwards compatibility)
+	// If no secret is configured, fail
 	if (!webhookSecret) {
-		return true;
+		return false;
 	}
 
 	const req = this.getRequestObject();
 
-	// Get the signature from GitHub's header
-	const signature = req.header('x-hub-signature-256');
+	// Get the signature from OfficeRnD's header
+	const signature = req.header('officernd-signature');
 	if (!signature) {
 		return false;
 	}
 
-	// Validate signature format (must start with "sha256=")
-	if (!signature.startsWith('sha256=')) {
+	// Validate signature format
+  const parts = Object.fromEntries(
+    signature.split(',').map((kv: string) => {
+      const [k, v] = kv.split('=');
+      return [k.trim(), v.trim()];
+    }),
+  );
+
+	if (!parts.t || !parts.v1) {
 		return false;
 	}
 
-	// Extract just the hex digest part
-	const providedSignature = signature.substring(7);
+  // Timestamp tolerance check
+  const now = Math.floor(Date.now() / 1000);
+  const t = Number(parts.t);
+  if (!Number.isFinite(t) || Math.abs(now - t) > 300) {
+    return false;
+  }
 
 	try {
 		// Get the raw request body
@@ -104,23 +118,17 @@ export function verifySignature(this: IWebhookFunctions): boolean {
 			return false;
 		}
 
-		// Compute HMAC-SHA256 of the raw body using our secret
-		const hmac = createHmac('sha256', webhookSecret);
+	  const signedPayload = `${parts.t}.${req.rawBody}`
 
-		if (Buffer.isBuffer(req.rawBody)) {
-			hmac.update(req.rawBody);
-		} else {
-			const rawBodyString =
-				typeof req.rawBody === 'string' ? req.rawBody : JSON.stringify(req.rawBody);
-			hmac.update(rawBodyString);
-		}
 
-		const computedSignature = hmac.digest('hex');
+    const hmac = createHmac('sha256', webhookSecret);
+    hmac.update(signedPayload, 'utf8');
+    const computedSignature = hmac.digest('hex');
 
-		const computedBuffer = Buffer.from(computedSignature, 'utf8');
-		const providedBuffer = Buffer.from(providedSignature, 'utf8');
+    const computedBuffer = Buffer.from(computedSignature, 'utf8');
+    const providedBuffer = Buffer.from(parts.v1, 'utf8');
 
-		// Buffers must be same length for timingSafeEqual
+    // Buffers must be same length for timingSafeEqual
 		if (computedBuffer.length !== providedBuffer.length) {
 			return false;
 		}

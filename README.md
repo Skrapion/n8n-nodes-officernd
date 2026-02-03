@@ -122,7 +122,7 @@ https://app.officernd.com/admin/<YOUR ORG SLUG>
 
 ## Compatibility
 
-Tested again n8n 2.4.8 and the OfficeRnD v2 API.
+Tested against n8n 2.4.8 and the OfficeRnD v2 API.
 
 ## Resources
 

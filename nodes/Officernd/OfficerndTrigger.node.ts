@@ -89,9 +89,9 @@ export class OfficerndTrigger implements INodeType {
 
 				const responseData = await officerndApiRequest.call(this, 'POST', '/webhooks', body);
 
-				webhookData.webhookId = responseData[0]._id as string;
-				webhookData.webhookEvents = responseData[0].eventTypes as string[];
-				webhookData.webhookSecret = responseData[0].secret as string;
+				webhookData.webhookId = responseData._id as string;
+				webhookData.webhookEvents = responseData.eventTypes as string[];
+				webhookData.webhookSecret = responseData.secret as string;
 
 				return true;
 			},

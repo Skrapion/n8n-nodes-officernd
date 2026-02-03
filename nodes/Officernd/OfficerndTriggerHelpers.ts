@@ -20,7 +20,7 @@ export async function officerndApiRequest(
 	body: IDataObject | IDataObject[] = {},
 	qs: IDataObject = {},
 	option: IDataObject = {},
-): Promise<IDataObject[]> {
+): Promise<IDataObject> {
 	const options: IHttpRequestOptions = {
 		headers: {
 			Accept: 'application/json',

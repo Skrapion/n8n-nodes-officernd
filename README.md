@@ -100,7 +100,7 @@ Sign in to your OfficeRnD account.
 
 Navigate to Settings->Data & Accessibility->Developer Tools->Applications and add an application.
 
-To use all the features of this node, you'll need the following permissions:
+To use this node, you'll need at least the following permissions:
 
 * flex.billing.plans.read
 * flex.community.members.read

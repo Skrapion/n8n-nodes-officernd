@@ -41,7 +41,7 @@ export class OfficerndOAuth2Api implements ICredentialType {
 			displayName: 'Scope',
 			name: 'scope',
 			type: 'hidden',
-			default: 'flex.community.members.read flex.community.members.update flex.community.companies.read flex.community.checkins.create flex.community.fees.read flex.community.memberships.read flex.space.locations.read flex.space.passes.read flex.billing.plans.read flex.settings.webhooks.read flex.settings.webhooks.create flex.settings.webhooks.delete flex.settings.customProperties.read',
+			default: 'flex.community.members.read flex.community.members.update flex.community.checkins.create flex.community.memberships.read flex.space.locations.read flex.space.passes.read flex.billing.plans.read flex.settings.webhooks.read flex.settings.webhooks.create flex.settings.webhooks.delete flex.settings.customProperties.read',
 		},
 		{
 			displayName: 'Authentication',

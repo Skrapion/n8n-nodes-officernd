@@ -115,7 +115,7 @@ export const membershipFields: INodeProperties[] = [
     },
     routing: {
       request: {
-        url: '=/membership/{{ $value }}'
+        url: '=/memberships/{{ $value }}'
       },
     },
 		default: '',

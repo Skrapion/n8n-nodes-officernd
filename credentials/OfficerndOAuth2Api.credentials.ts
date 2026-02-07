@@ -48,6 +48,7 @@ export class OfficerndOAuth2Api implements ICredentialType {
         'flex.community.members.read ' +
         'flex.community.members.update ' +
         'flex.community.checkins.create ' +
+        'flex.community.fees.read ' +
         'flex.community.memberships.read ' +
         'flex.space.locations.read ' +
         'flex.space.passes.read ' +

@@ -5,6 +5,7 @@ import { dayPassOperations, dayPassFields } from './DayPassDescription';
 import { planOperations, planFields } from './PlanDescription';
 import { checkinOperations, checkinFields } from './CheckinDescription';
 import { paymentOperations, paymentFields } from './PaymentDescription';
+import { feeOperations, feeFields } from './FeeDescription';
 
 export class Officernd implements INodeType {
 	description: INodeTypeDescription = {
@@ -44,6 +45,10 @@ export class Officernd implements INodeType {
 						name: 'Day Pass',
 						value: 'dayPass',
 					},
+          {
+            name: 'Fee',
+            value: 'fee',
+          },
 					{
 						name: 'Member',
 						value: 'member',
@@ -75,6 +80,8 @@ export class Officernd implements INodeType {
       ...checkinFields,
       ...paymentOperations,
       ...paymentFields,
+      ...feeOperations,
+      ...feeFields,
 		],
 	};
 }

@@ -21,6 +21,14 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 The node supports the following operations:
 
+* Checkins
+  * Check in a member
+* Day Passes
+  * Get All Sets of Daypasses
+  * Get a Set of Daypasses
+* Fees
+  * Get Payment
+  * Get All Payments
 * Members
   * Get Member
   * Get All Members
@@ -28,17 +36,12 @@ The node supports the following operations:
 * Memberships
   * Get Membership
   * Get All Memberships
-* Plans
-  * Get Plan
-  * Get All Plans
-* Passes
-  * Get All Sets of Daypasses
-  * Get a Set of Daypasses
-* Checkins
-  * Check in a member
 * Payments
   * Get Payment
   * Get All Payments
+* Plans
+  * Get Plan
+  * Get All Plans
 
 ## Triggers
 * Company

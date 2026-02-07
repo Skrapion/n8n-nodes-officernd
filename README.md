@@ -36,6 +36,9 @@ The node supports the following operations:
   * Get a Set of Daypasses
 * Checkins
   * Check in a member
+* Payments
+  * Get Payment
+  * Get All Payments
 
 ## Triggers
 * Company
@@ -100,19 +103,7 @@ Sign in to your OfficeRnD account.
 
 Navigate to Settings->Data & Accessibility->Developer Tools->Applications and add an application.
 
-To use this node, you'll need at least the following permissions:
-
-* flex.billing.plans.read
-* flex.community.members.read
-* flex.community.members.update
-* flex.community.checkins.create
-* flex.community.memberships.read
-* flex.space.locations.read
-* flex.space.passes.read
-* flex.settings.webhooks.read
-* flex.settings.webhooks.create
-* flex.settings.webhooks.delete
-* flex.settings.customProperties.read
+Make sure you enable all the permissions listed in the Scopes field of your credentials. The scopes default to all the permissions you need to use all the features of this node. You can remove some of the scopes if you don't need to use all the features of this node, or add more scopes if you're using the HTTP Request operation to access operations that aren't included in this node.
 
 Once created, you can click the cog icon next to the application and choose 'View' to get your Client ID and Client Secret for your n8n credentials.
 

@@ -4,6 +4,7 @@ import { membershipOperations, membershipFields } from './MembershipDescription'
 import { dayPassOperations, dayPassFields } from './DayPassDescription';
 import { planOperations, planFields } from './PlanDescription';
 import { checkinOperations, checkinFields } from './CheckinDescription';
+import { paymentOperations, paymentFields } from './PaymentDescription';
 
 export class Officernd implements INodeType {
 	description: INodeTypeDescription = {
@@ -51,6 +52,10 @@ export class Officernd implements INodeType {
 						name: 'Membership',
 						value: 'membership',
 					},
+          {
+            name: 'Payment',
+            value: 'payment',
+          },
 					{
 						name: 'Plan',
 						value: 'plan',
@@ -68,6 +73,8 @@ export class Officernd implements INodeType {
       ...planFields,
       ...checkinOperations,
       ...checkinFields,
+      ...paymentOperations,
+      ...paymentFields,
 		],
 	};
 }

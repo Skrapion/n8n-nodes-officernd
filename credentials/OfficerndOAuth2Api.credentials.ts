@@ -40,8 +40,22 @@ export class OfficerndOAuth2Api implements ICredentialType {
 		{
 			displayName: 'Scope',
 			name: 'scope',
-			type: 'hidden',
-			default: 'flex.community.members.read flex.community.members.update flex.community.checkins.create flex.community.memberships.read flex.space.locations.read flex.space.passes.read flex.billing.plans.read flex.settings.webhooks.read flex.settings.webhooks.create flex.settings.webhooks.delete flex.settings.customProperties.read',
+			type: 'string',
+      required: true,
+			default: 
+        'flex.billing.payments.read ' +
+        'flex.billing.plans.read ' +
+        'flex.community.members.read ' +
+        'flex.community.members.update ' +
+        'flex.community.checkins.create ' +
+        'flex.community.memberships.read ' +
+        'flex.space.locations.read ' +
+        'flex.space.passes.read ' +
+        'flex.settings.webhooks.read ' +
+        'flex.settings.webhooks.create ' +
+        'flex.settings.webhooks.delete ' +
+        'flex.settings.customProperties.read',
+      description: "Make sure that all the scopes listed here are also listed in your permission in your application settings. The default is the scopes required for all the features in this node. You can choose fewer nodes if you don't need all the features, or more scopes if you're using the HTTP Request operation to use endpoints that are not yet exposed by this node.",
 		},
 		{
 			displayName: 'Authentication',
@@ -68,6 +82,7 @@ export class OfficerndOAuth2Api implements ICredentialType {
       displayName: 'Organization Slug',
       name: 'orgSlug',
       type: 'string',
+      required: true,
       description: 'The organization slug; you can find this in the URL of your OfficeRnD login: https://app.officernd.com/admin/<YOUR ORG SLUG>',
       default: '',
     },

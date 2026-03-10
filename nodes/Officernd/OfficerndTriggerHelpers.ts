@@ -9,7 +9,6 @@ import type {
 	JsonObject,
 } from 'n8n-workflow';
 import { NodeApiError } from 'n8n-workflow';
-// import { LoggerProxy } from 'n8n-workflow';
 
 import { createHmac, timingSafeEqual } from 'crypto';
 
@@ -46,20 +45,10 @@ export async function officerndApiRequest(
     const baseUrl = `https://app.officernd.com/api/v2/organizations/${credentials.orgSlug}`;
     options.url = `${baseUrl}${endpoint}`;
 
-    /*
-    LoggerProxy.info(`Url: ${options.url}`);
-    LoggerProxy.info('Body: ' + JSON.stringify(options.body));
-    LoggerProxy.info("Method: " + options.method);
-    LoggerProxy.info("qs: " + JSON.stringify(options.qs));
-    */
-
 		const result = await this.helpers.httpRequestWithAuthentication.call(this, credentialType, options);
     
-    //LoggerProxy.info("Result: " + JSON.stringify(result));
-
     return result;
 	} catch (error) {
-    //LoggerProxy.info("Error: " + JSON.stringify(error));
 		throw new NodeApiError(this.getNode(), error as JsonObject);
 	}
 }
@@ -101,7 +90,7 @@ export function verifySignature(this: IWebhookFunctions): boolean {
     }),
   );
 
-	if (!parts.t || !parts.v1) {
+	if (!parts.t || !parts.signature) {
 		return false;
 	}
 
@@ -118,15 +107,14 @@ export function verifySignature(this: IWebhookFunctions): boolean {
 			return false;
 		}
 
-	  const signedPayload = `${parts.t}.${req.rawBody}`
-
+	  const signedPayload = `${req.rawBody}.${parts.t}`
 
     const hmac = createHmac('sha256', webhookSecret);
     hmac.update(signedPayload, 'utf8');
     const computedSignature = hmac.digest('hex');
 
     const computedBuffer = Buffer.from(computedSignature, 'utf8');
-    const providedBuffer = Buffer.from(parts.v1, 'utf8');
+    const providedBuffer = Buffer.from(parts.signature, 'utf8');
 
     // Buffers must be same length for timingSafeEqual
 		if (computedBuffer.length !== providedBuffer.length) {

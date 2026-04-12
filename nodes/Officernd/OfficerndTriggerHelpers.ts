@@ -57,7 +57,7 @@ export async function officerndApiRequest(
  * Verifies the OfficeRnD webhook signature using HMAC-SHA256.
  *
  * OfficeRnD sends a signature in the `officernd-signature` header in the format:
- * `t=<timestamp>,v1=<HMAC hex digest>`
+ * `t=<timestamp>,signature=<HMAC hex digest>`
  *
  * This function computes the expected signature using the stored webhook secret
  * and compares it with the provided signature using a constant-time comparison.

@@ -39,7 +39,7 @@
     ]
   },
   "devDependencies": {
-    "@n8n/node-cli": "^0.18.0",
+    "@n8n/node-cli": "^0.23.1",
     "@types/node": "^25.2.0",
     "eslint": "9.32.0",
     "prettier": "3.6.2",
@@ -48,5 +48,10 @@
   },
   "peerDependencies": {
     "n8n-workflow": "*"
+  },
+  "release-it": {
+    "npm": {
+      "publish": false
+    }
   }
 }
